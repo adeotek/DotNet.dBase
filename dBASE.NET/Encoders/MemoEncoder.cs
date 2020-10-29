@@ -9,8 +9,8 @@
 
         private MemoEncoder() { }
 
-        public static MemoEncoder Instance => instance ?? (instance = new MemoEncoder());
-
+        public static MemoEncoder Instance => instance ??= new MemoEncoder();
+        
         /// <inheritdoc />
         public byte[] Encode(DbfField field, object data, Encoding encoding)
         {
