@@ -1,37 +1,33 @@
-﻿using System;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.IO;
+using Xunit;
 
-namespace dBASE.NET.Tests
+namespace dBASE.NET.Tests;
+
+/// <summary>
+/// DBase3WithMemo is version 0x83.
+/// </summary>
+public class Dbase3WithMemoStreamRead
 {
-    /// <summary>
-    /// DBase3WithMemo is version 0x83.
-    /// </summary>
-    [TestClass]
-    public class Dbase3WithMemoStreamRead
+    private readonly Dbf dbf;
+
+    public Dbase3WithMemoStreamRead()
     {
-        Dbf dbf;
+        dbf = new Dbf();
 
-        [TestInitialize]
-        public void testInit()
-        {
-            dbf = new Dbf();
+        using var baseStream = File.Open("fixtures/83/dbase_83_db3ms.dbf", FileMode.Open, FileAccess.Read);
+        using var memoStream = File.Open("fixtures/83/dbase_83_db3ms.dbt", FileMode.Open, FileAccess.Read);
+        dbf.Read(baseStream, memoStream);
+    }
 
-            using (FileStream baseStream = File.Open("fixtures/83/dbase_83.dbf", FileMode.Open, FileAccess.Read))
-            using (FileStream memoStream = File.Open("fixtures/83/dbase_83.dbt", FileMode.Open, FileAccess.Read))
-                dbf.Read(baseStream, memoStream);
-        }
+    [Fact]
+    public void RecordCount()
+    {
+        AssertX.Equal(67, dbf.Records.Count, "Should read 67 records");
+    }
 
-        [TestMethod]
-        public void RecordCount()
-        {
-            Assert.AreEqual(67, dbf.Records.Count, "Should read 67 records");
-        }
-
-        [TestMethod]
-        public void FieldCount()
-        {
-            Assert.AreEqual(15, dbf.Fields.Count, "Should read 15 fields");
-        }
+    [Fact]
+    public void FieldCount()
+    {
+        AssertX.Equal(15, dbf.Fields.Count, "Should read 15 fields");
     }
 }
