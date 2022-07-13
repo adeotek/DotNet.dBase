@@ -26,6 +26,6 @@ jobs:
     - uses: bbonkr/get-version-action@v1.0.4
       id: get_version
       with:
-        project: "src/dBASE.NET.csproj"
+        project: "src/Adeotek.dBASE.NET.csproj"
     - name: Publish to NuGet.org
       run: dotnet nuget push --source "https://api.nuget.org/v3/index.json" --api-key ${{secrets.NUGET_API_KEY}} ./Adeotek.dBASE.NET.${{steps.get_version.outputs.version}}.nupkg
