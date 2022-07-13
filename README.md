@@ -124,4 +124,4 @@ http://yuml.me/diagram/scruffy/class/edit/[Dbf]+->[DbfRecord], [Dbf]+->[DbfField
 
 ## Credits
 
-This project is forked from [dBASE.NET](https://github.com/henck/dBASE.NET) by [Independent Software](http://www.independent-software.com/)
+This project was initially forked from [dBASE.NET](https://github.com/henck/dBASE.NET) by [Independent Software](http://www.independent-software.com/), but at some point was migrated to a stand-alone repository.
