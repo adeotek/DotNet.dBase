@@ -1,7 +1,8 @@
 ﻿# AdeoTEK dBASE.NET
-## Read and write DBF files with .NET
 
 [![.NET](https://github.com/adeotek/DotNet.dBase/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/adeotek/DotNet.dBase/actions/workflows/dotnet.yml)
+
+## Read and write DBF files with .NET
 
 __Adeotek.dBASE.NET__ is a .NET (`netstandard2.1`) class library used to read FoxBase, dBASE III and dBASE IV .dbf files. Data read
 from a file is returned as a list of typed fields and a list of records. This library is useful to add
