@@ -1,38 +1,40 @@
-﻿namespace dBASE.NET.Encoders
+﻿using System.Text;
+
+namespace dBASE.NET.Encoders;
+
+internal class LogicalEncoder : IEncoder
 {
-    using System.Text;
+    private static LogicalEncoder _instance;
 
-    internal class LogicalEncoder : IEncoder
+    private LogicalEncoder() { }
+
+    public static LogicalEncoder Instance => _instance ??= new LogicalEncoder();
+
+    /// <inheritdoc />
+    public byte[] Encode(DbfField field, object data, Encoding encoding)
     {
-        private static LogicalEncoder instance;
-
-        private LogicalEncoder() { }
-
-        public static LogicalEncoder Instance => instance ??= new LogicalEncoder();
-
-        /// <inheritdoc />
-        public byte[] Encode(DbfField field, object data, Encoding encoding)
+        // Convert boolean value to string.
+        var text = "?";
+        if (data != null)
         {
-            // Convert boolean value to string.
-            string text = "?";
-            if (data != null)
-            {
-                text = (bool)data == true ? "Y" : "N";
-            }
-
-            // Grow string to fill field length.
-            text = text.PadLeft(field.Length, ' ');
-
-            // Convert string to byte array.
-            return encoding.GetBytes(text);
+            text = (bool)data ? "Y" : "N";
         }
 
-        /// <inheritdoc />
-        public object Decode(byte[] buffer, byte[] memoData, Encoding encoding)
+        // Grow string to fill field length.
+        text = text.PadLeft(field.Length, ' ');
+
+        // Convert string to byte array.
+        return encoding.GetBytes(text);
+    }
+
+    /// <inheritdoc />
+    public object Decode(byte[] buffer, byte[] memoData, Encoding encoding)
+    {
+        var text = encoding.GetString(buffer).Trim().ToUpper();
+        if (text == "?")
         {
-            string text = encoding.GetString(buffer).Trim().ToUpper();
-            if (text == "?") return null;
-            return (text == "Y" || text == "T");
+            return null;
         }
+        return (text == "Y" || text == "T");
     }
 }

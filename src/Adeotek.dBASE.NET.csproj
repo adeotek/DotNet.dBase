@@ -6,21 +6,22 @@
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>dBASE.NET</RootNamespace>
     <AssemblyName>dBASE.NET</AssemblyName>
-    <Title>Adeotek dBASE .NET</Title>
+    <Title>Adeotek dBASE.NET</Title>
     <Description>dBASE.NET is a .NET class library used to load dBASE IV .dbf files. The Dbf class reads fields (DbfField) and records (DbfRecord) from a .dbf file. These fields and records can then be accessed as lists and looped over.</Description>
-    <Product>dBASE.NET Core</Product>
+    <Product>AdeoTEK dBase .NET</Product>
     <Company>AdeoTEK Software SRL</Company>
     <Authors>Independent Software / Alexander van Oostenrijk / George Benjamin-Schonberger</Authors>
     <Copyright>Copyright © AdeoTEK Software SRL 2022</Copyright>
-    <AssemblyVersion>1.4.1.5</AssemblyVersion>
-    <FileVersion>1.4.1.5</FileVersion>
+    <AssemblyVersion>1.4.1.6</AssemblyVersion>
+    <FileVersion>1.4.1.6</FileVersion>
     <Version>1.4.1</Version>
     <PackageId>Adeotek.dBASE.NET</PackageId>
     <PackageTags>dBASE,dbf</PackageTags>
-    <PackageProjectUrl>https://adeotek.github.io/dBASE.NET/</PackageProjectUrl>
-    <PackageLicense>https://github.com/adeotek/dBASE.NET/blob/main/LICENSE</PackageLicense>
-    <RepositoryUrl>https://github.com/adeotek/dBASE.NET/</RepositoryUrl>
+    <PackageProjectUrl>https://adeotek.github.io/DotNet.dBase/</PackageProjectUrl>
+    <PackageLicense>https://github.com/adeotek/DotNet.dBase/blob/main/LICENSE</PackageLicense>
+    <RepositoryUrl>https://github.com/adeotek/DotNet.dBase/</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageIcon>PackageIcon.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -29,17 +30,17 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
- 
+
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
-  
+
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>dBASE.NET.key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Adeotek.dBASE.NET.key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <None Include="dBASE.NET.key.snk" />
+    <None Include="Adeotek.dBASE.NET.key.snk" />
     <None Include="../LICENSE">
       <Pack>True</Pack>
       <PackagePath>/</PackagePath>
@@ -53,5 +54,5 @@
       <PackagePath>/</PackagePath>
     </None>
   </ItemGroup>
-  
+
 </Project>

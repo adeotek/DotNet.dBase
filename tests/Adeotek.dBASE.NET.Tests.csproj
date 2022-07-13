@@ -4,6 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>disable</Nullable>
         <IsPackable>false</IsPackable>
+      <RootNamespace>dBASE.NET.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\dBASE.NET.csproj" />
+      <ProjectReference Include="..\src\Adeotek.dBASE.NET.csproj" />
     </ItemGroup>
 
     <PropertyGroup>
@@ -29,11 +30,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <AssemblyOriginatorKeyFile>dBASE.NET.Tests.snk</AssemblyOriginatorKeyFile>
+        <AssemblyOriginatorKeyFile>Adeotek.dBASE.NET.Tests.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="dBASE.NET.Tests.snk" />
+        <None Include="Adeotek.dBASE.NET.Tests.snk" />
     </ItemGroup>
 
     <ItemGroup>

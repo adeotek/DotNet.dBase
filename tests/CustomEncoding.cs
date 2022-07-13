@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using dBASE.NET;
 using Xunit;
 
 namespace dBASE.NET.Tests;
@@ -15,7 +16,7 @@ public class CustomEncoding
     public CustomEncoding()
     {
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-        
+
         fields = new List<DbfField>
         {
             new ("OTD", DbfFieldType.Character, 4),
@@ -49,7 +50,7 @@ public class CustomEncoding
         };
 
         encoding = Encoding.GetEncoding(866);
-        
+
         standardDbf = new Dbf(encoding);
         standardDbf.Read("fixtures/CP866/SPXXXX0159.dbf");
     }

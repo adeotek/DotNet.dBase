@@ -1,11 +1,10 @@
 ﻿using System.Text;
 
-namespace dBASE.NET.Encoders
-{
-    internal interface IEncoder
-    {
-        byte[] Encode(DbfField field, object data, Encoding encoding);
+namespace dBASE.NET.Encoders;
 
-        object Decode(byte[] buffer, byte[] memoData, Encoding encoding);
-    }
+internal interface IEncoder
+{
+    byte[] Encode(DbfField field, object data, Encoding encoding);
+
+    object Decode(byte[] buffer, byte[] memoData, Encoding encoding);
 }

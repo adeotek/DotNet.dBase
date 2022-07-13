@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using dBASE.NET;
 using Xunit;
 
 namespace dBASE.NET.Tests;

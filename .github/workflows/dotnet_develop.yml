@@ -22,7 +22,7 @@ jobs:
     - uses: bbonkr/get-version-action@v1.0.4
       id: get_version
       with:
-        project: "src/dBASE.NET.csproj"
+        project: "src/Adeotek.dBASE.NET.csproj"
     - name: logging
       run: |
         echo "Version=${{steps.get_version.outputs.version}}"
