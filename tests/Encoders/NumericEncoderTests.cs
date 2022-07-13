@@ -1,108 +1,103 @@
-﻿namespace dBASE.NET.Tests.Encoders
+﻿using System.Text;
+using dBASE.NET.Encoders;
+using Xunit;
+
+namespace dBASE.NET.Tests.Encoders;
+
+public class NumericEncoderTests
 {
-    using System.Text;
+    private readonly DbfField numericField = new DbfField("SUMMA", DbfFieldType.Numeric, 10, 2);
 
-    using dBASE.NET.Encoders;
+    private readonly DbfField integerField = new DbfField("NUM", DbfFieldType.Numeric, 10, 0);
 
-    using Xunit;
+    private readonly Encoding encoding = Encoding.ASCII;
 
-    
-    public class NumericEncoderTests
+    [Fact]
+    public void EncodeTestDecimalOverLength()
     {
-        private readonly DbfField numericField = new DbfField("SUMMA", DbfFieldType.Numeric, 10, 2);
+        // Arrange.
+        const decimal val = 13005200m;
+        var expectedVal = new[] { '1', '3', '0', '0', '5', '2', '0', '0', '.', '0' };
 
-        private readonly DbfField integerField = new DbfField("NUM", DbfFieldType.Numeric, 10, 0);
+        // Act.
+        var expectedEncodedVal = encoding.GetBytes(expectedVal);
+        var encodedVal = NumericEncoder.Instance.Encode(numericField, val, encoding);
 
-        private readonly Encoding encoding = Encoding.ASCII;
-
-        [Fact]
-        public void EncodeTestDecimalOverLength()
+        // Assert.
+        for (var i = 0; i < numericField.Length; i++)
         {
-            // Arrange.
-            const decimal val = 13005200m;
-            var expectedVal = new[] { '1', '3', '0', '0', '5', '2', '0', '0', '.', '0' };
-
-            // Act.
-            var expectedEncodedVal = encoding.GetBytes(expectedVal);
-            var encodedVal = NumericEncoder.Instance.Encode(numericField, val, encoding);
-
-            // Assert.
-            for (int i = 0; i < numericField.Length; i++)
-            {
-                AssertX.Equal(expectedEncodedVal[i], encodedVal[i], $"Position `{i}` failed.");
-            }
+            AssertX.Equal(expectedEncodedVal[i], encodedVal[i], $"Position `{i}` failed.");
         }
+    }
 
-        [Fact]
-        public void EncodeTestDecimalOverPrecision()
+    [Fact]
+    public void EncodeTestDecimalOverPrecision()
+    {
+        // Arrange.
+        const decimal val = 1300.5200m;
+        var expectedVal = new[] { ' ', ' ', ' ', '1', '3', '0', '0', '.', '5', '2' };
+
+        // Act.
+        var expectedEncodedVal = encoding.GetBytes(expectedVal);
+        var encodedVal = NumericEncoder.Instance.Encode(numericField, val, encoding);
+
+        // Assert.
+        for (var i = 0; i < numericField.Length; i++)
         {
-            // Arrange.
-            const decimal val = 1300.5200m;
-            var expectedVal = new[] { ' ', ' ', ' ', '1', '3', '0', '0', '.', '5', '2' };
-
-            // Act.
-            var expectedEncodedVal = encoding.GetBytes(expectedVal);
-            var encodedVal = NumericEncoder.Instance.Encode(numericField, val, encoding);
-
-            // Assert.
-            for (int i = 0; i < numericField.Length; i++)
-            {
-                AssertX.Equal(expectedEncodedVal[i], encodedVal[i], $"Position `{i}` failed.");
-            }
+            AssertX.Equal(expectedEncodedVal[i], encodedVal[i], $"Position `{i}` failed.");
         }
+    }
 
-        [Fact]
-        public void EncodeTestDecimalUnderPrecision()
+    [Fact]
+    public void EncodeTestDecimalUnderPrecision()
+    {
+        // Arrange.
+        const decimal val = 1300m;
+        var expectedVal = new[] { ' ', ' ', ' ', '1', '3', '0', '0', '.', '0', '0' };
+
+        // Act.
+        var expectedEncodedVal = encoding.GetBytes(expectedVal);
+        var encodedVal = NumericEncoder.Instance.Encode(numericField, val, encoding);
+
+        // Assert.
+        for (var i = 0; i < numericField.Length; i++)
         {
-            // Arrange.
-            const decimal val = 1300m;
-            var expectedVal = new[] { ' ', ' ', ' ', '1', '3', '0', '0', '.', '0', '0' };
-
-            // Act.
-            var expectedEncodedVal = encoding.GetBytes(expectedVal);
-            var encodedVal = NumericEncoder.Instance.Encode(numericField, val, encoding);
-
-            // Assert.
-            for (int i = 0; i < numericField.Length; i++)
-            {
-                AssertX.Equal(expectedEncodedVal[i], encodedVal[i], $"Position `{i}` failed.");
-            }
+            AssertX.Equal(expectedEncodedVal[i], encodedVal[i], $"Position `{i}` failed.");
         }
+    }
 
-        [Fact]
-        public void EncodeTestDecimalNull()
+    [Fact]
+    public void EncodeTestDecimalNull()
+    {
+        // Arrange.
+        var expectedVal = numericField.DefaultValue;
+
+        // Act.
+        var expectedEncodedVal = encoding.GetBytes(expectedVal);
+        var encodedVal = NumericEncoder.Instance.Encode(numericField, null, encoding);
+
+        // Assert.
+        for (var i = 0; i < numericField.Length; i++)
         {
-            // Arrange.
-            decimal? val = null;
-            string expectedVal = numericField.DefaultValue;
-
-            // Act.
-            var expectedEncodedVal = encoding.GetBytes(expectedVal);
-            var encodedVal = NumericEncoder.Instance.Encode(numericField, val, encoding);
-
-            // Assert.
-            for (int i = 0; i < numericField.Length; i++)
-            {
-                AssertX.Equal(expectedEncodedVal[i], encodedVal[i], $"Position `{i}` failed.");
-            }
+            AssertX.Equal(expectedEncodedVal[i], encodedVal[i], $"Position `{i}` failed.");
         }
+    }
 
-        [Fact]
-        public void EncodeTestNumber()
+    [Fact]
+    public void EncodeTestNumber()
+    {
+        // Arrange.
+        const int val = 1;
+        var expectedVal = new[] { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '1' };
+
+        // Act.
+        var expectedEncodedVal = encoding.GetBytes(expectedVal);
+        var encodedVal = NumericEncoder.Instance.Encode(integerField, val, encoding);
+
+        // Assert.
+        for (var i = 0; i < numericField.Length; i++)
         {
-            // Arrange.
-            const int val = 1;
-            var expectedVal = new[] { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '1' };
-
-            // Act.
-            var expectedEncodedVal = encoding.GetBytes(expectedVal);
-            var encodedVal = NumericEncoder.Instance.Encode(integerField, val, encoding);
-
-            // Assert.
-            for (int i = 0; i < numericField.Length; i++)
-            {
-                AssertX.Equal(expectedEncodedVal[i], encodedVal[i], $"Position `{i}` failed.");
-            }
+            AssertX.Equal(expectedEncodedVal[i], encodedVal[i], $"Position `{i}` failed.");
         }
     }
 }

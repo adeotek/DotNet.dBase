@@ -17,8 +17,8 @@ public class CustomEncoding2
     {
         fields = new List<DbfField>
         {
-            new DbfField("中文字段", DbfFieldType.Character, 10),
-            new DbfField("中文字段2", DbfFieldType.Character, 10),
+            new("中文字段", DbfFieldType.Character, 10),
+            new("中文字段2", DbfFieldType.Character, 10),
         };
 
         data = new Dictionary<string, object>
@@ -27,6 +27,7 @@ public class CustomEncoding2
             { "中文字段2", "股票代码股票代码" },
         };
 
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         encoding = Encoding.GetEncoding("GB2312");
     }
 
@@ -53,11 +54,11 @@ public class CustomEncoding2
         }
 
         // Act.
-        dbf.Write("test.dbf", DbfVersion.FoxBaseDBase3NoMemo);
+        dbf.Write("CustomEncoding2Test.dbf", DbfVersion.FoxBaseDBase3NoMemo);
 
         // Assert.
         var dbfTest = new Dbf(encoding);
-        dbfTest.Read("test.dbf");
+        dbfTest.Read("CustomEncoding2Test.dbf");
         var rowStd = dbfTest.Records[0];
         Assert.Equal("股票代码", rowStd["中文字段"]);
         Assert.Equal("股票代码股", rowStd["中文字段2"]);      //should be truncated to 10 bytes

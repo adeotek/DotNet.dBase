@@ -1,41 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace dBASE.NET.Encoders;
 
-namespace dBASE.NET.Encoders
+internal static class EncoderFactory
 {
-	internal class EncoderFactory
-	{
-		public static IEncoder GetEncoder(DbfFieldType type)
-		{
-			switch (type)
-			{
-				case DbfFieldType.Character:
-					return CharacterEncoder.Instance;
-				case DbfFieldType.Currency:
-					return CurrencyEncoder.Instance;
-				case DbfFieldType.Date:
-					return DateEncoder.Instance;
-				case DbfFieldType.DateTime:
-					return DateTimeEncoder.Instance;
-				case DbfFieldType.Float:
-					return FloatEncoder.Instance;
-				case DbfFieldType.Integer:
-					return IntegerEncoder.Instance;
-				case DbfFieldType.Logical:
-					return LogicalEncoder.Instance;
-				case DbfFieldType.Memo:
-					return MemoEncoder.Instance;
-				case DbfFieldType.NullFlags:
-					return NullFlagsEncoder.Instance;
-				case DbfFieldType.Numeric:
-					return NumericEncoder.Instance;
-				default:
-					throw new ArgumentException("No encoder found for dBASE type " + type);
-			}
-		}
+    public static IEncoder GetEncoder(DbfFieldType type)
+    {
+        return type switch
+        {
+            DbfFieldType.Character => CharacterEncoder.Instance,
+            DbfFieldType.Currency => CurrencyEncoder.Instance,
+            DbfFieldType.Date => DateEncoder.Instance,
+            DbfFieldType.DateTime => DateTimeEncoder.Instance,
+            DbfFieldType.Float => FloatEncoder.Instance,
+            DbfFieldType.Integer => IntegerEncoder.Instance,
+            DbfFieldType.Logical => LogicalEncoder.Instance,
+            DbfFieldType.Memo => MemoEncoder.Instance,
+            DbfFieldType.NullFlags => NullFlagsEncoder.Instance,
+            DbfFieldType.Numeric => NumericEncoder.Instance,
+            _ => throw new ArgumentException("No encoder found for dBASE type " + type)
+        };
+    }
 
-	}
 }

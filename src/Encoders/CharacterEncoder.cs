@@ -1,6 +1,6 @@
-﻿namespace dBASE.NET.Encoders;
+﻿using System.Text;
 
-using System.Text;
+namespace dBASE.NET.Encoders;
 
 internal class CharacterEncoder : IEncoder
 {

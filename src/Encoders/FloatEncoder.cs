@@ -1,39 +1,37 @@
-﻿namespace dBASE.NET.Encoders
+﻿using System.Globalization;
+using System.Text;
+
+namespace dBASE.NET.Encoders;
+
+internal class FloatEncoder : IEncoder
 {
-    using System;
-    using System.Globalization;
-    using System.Text;
+    private static FloatEncoder instance;
 
-    internal class FloatEncoder : IEncoder
+    private FloatEncoder() { }
+
+    public static FloatEncoder Instance => instance ??= new FloatEncoder();
+
+    /// <inheritdoc />
+    public byte[] Encode(DbfField field, object data, Encoding encoding)
     {
-        private static FloatEncoder instance;
-
-        private FloatEncoder() { }
-
-        public static FloatEncoder Instance => instance ??= new FloatEncoder();
-
-        /// <inheritdoc />
-        public byte[] Encode(DbfField field, object data, Encoding encoding)
+        var text = Convert.ToString(data, CultureInfo.InvariantCulture)?.PadLeft(field.Length, ' ');
+        if (text != null && text.Length > field.Length)
         {
-            string text = Convert.ToString(data, CultureInfo.InvariantCulture).PadLeft(field.Length, ' ');
-            if (text.Length > field.Length)
-            {
-                text.Substring(0, field.Length);
-            }
-
-            return encoding.GetBytes(text);
+            text = text[..field.Length];
         }
 
-        /// <inheritdoc />
-        public object Decode(byte[] buffer, byte[] memoData, Encoding encoding)
-        {
-            string text = encoding.GetString(buffer).Trim();
-            if (text.Length == 0)
-            {
-                return null;
-            }
+        return text == null ? Array.Empty<byte>() : encoding.GetBytes(text);
+    }
 
-            return Convert.ToSingle(text, CultureInfo.InvariantCulture);
+    /// <inheritdoc />
+    public object Decode(byte[] buffer, byte[] memoData, Encoding encoding)
+    {
+        var text = encoding.GetString(buffer).Trim();
+        if (text.Length == 0)
+        {
+            return null;
         }
+
+        return Convert.ToSingle(text, CultureInfo.InvariantCulture);
     }
 }
