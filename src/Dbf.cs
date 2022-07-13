@@ -67,7 +67,7 @@ public class Dbf
     public void Read(string path)
     {
         // Open stream for reading.
-        using var baseStream = File.Open(path, FileMode.Open, FileAccess.Read);
+        using var baseStream = File.Open(path, FileMode.Open, FileAccess.Read,  FileShare.Read);
         var memoPath = GetMemoPath(path);
         if (memoPath == null)
         {
@@ -75,7 +75,7 @@ public class Dbf
             return;
         }
 
-        using var memoStream = File.Open(memoPath, FileMode.Open, FileAccess.Read);
+        using var memoStream = File.Open(memoPath, FileMode.Open, FileAccess.Read,  FileShare.Read);
         Read(baseStream, memoStream);
     }
 
@@ -97,7 +97,8 @@ public class Dbf
         }
 
         baseStream.Seek(0, SeekOrigin.Begin);
-        using var reader = new BinaryReader(baseStream);
+        // using var reader = new BinaryReader(baseStream);
+        using var reader = new BinaryReader(baseStream, Encoding.ASCII); // ReadFields() use PeekChar to detect end flag=0D, default Encoding may be UTF8 then clause exception
         ReadHeader(reader);
         var memoData = memoStream != null ? ReadMemos(memoStream) : null;
         ReadFields(reader);
